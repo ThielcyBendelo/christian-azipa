@@ -245,7 +245,7 @@ racine/
 ### Pour le développement:
 
 ```
-louiscar-web/
+bompikiliki/
 ├── docs/
 │   ├── SECURITY/ ............... Guides sécurité
 │   ├── DEPLOYMENT/ ............ Guides déploiement

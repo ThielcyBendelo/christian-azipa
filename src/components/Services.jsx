@@ -1,136 +1,132 @@
-import React, { useState } from "react";
-import QuoteModal from "./QuoteModal"; // Assure-toi que ce fichier existe
-import { FaBullhorn, FaServer, FaHandsHelping, FaShieldAlt, FaEnvelope } from "react-icons/fa";
+import React, { useState } from "react"; 
+import QuoteModal from "./QuoteModal"; 
+import { FaBrain, FaDatabase, FaCogs, FaChartLine, FaEnvelope, FaCheck } from "react-icons/fa"; 
 
 const services = [
-  {
-    title: "Gestion de l'image de marque",
-    icon: <FaBullhorn />,
-    description: "Pilotage de la communication externe et des relations presse pour l'agence.",
-    template: "Stratégie de communication, rédaction de communiqués de presse, gestion des réseaux sociaux, organisation d'événements et suivi des campagnes publicitaires.",
-    benefits: ["Stratégie personnalisée", "Rédaction professionnelle", "Gestion de crise", "Reporting"],
-    price: "Sur devis",
-  },
-  {
-    title: "Maintien en Condition Opérationnelle (MCO)",
-    icon: <FaServer />,
-    description: "Surveillance, mises à jour et optimisation des infrastructures serveurs.",
-    template: "Monitoring 24/7, gestion des incidents, mises à jour de sécurité, optimisation des performances et support technique proactif.",
-    benefits: ["Surveillance continue", "Intervention rapide", "Mises à jour", "Optimisation"],
-    price: "Sur devis",
-  },
-  {
-    title: "Interface Client-Technique",
-    icon: <FaHandsHelping />,
-    description: "Traduction des besoins business en spécifications techniques pour les développeurs.",
-    template: "Rédaction de cahiers des charges, gestion de projets Agile, coordination entre équipes marketing et développement, validation des livrables et suivi de qualité.",
-    benefits: ["Communication fluide", "Documentation claire", "Gestion efficace", "Validation"],
-    price: "Sur devis",
-  },
-  {
-    title: "Support & Continuité de Service",
-    icon: <FaShieldAlt />,
-    description: "Gestion des incidents et maintenance préventive des systèmes déployés.",
-    template: "Support technique 24/7, maintenance préventive, gestion des sauvegardes, monitoring des serveurs et optimisation des performances pour garantir disponibilté de vos services.",
-    benefits: ["Audit RGPD", "Rapport détaillé", "Intervention rapide", "Formation"],
-    price: "Sur devis",
-  },
-];
+  { 
+    title: "Conception de Modèles IA & Deep Learning", 
+    icon: <FaBrain />, 
+    description: "Développement d'algorithmes intelligents sur-mesure pour automatiser vos processus décisionnels.", 
+    template: "Entraînement de réseaux de neurones (Computer Vision, NLP), fine-tuning de Large Language Models (LLM) et optimisation fine des hyperparamètres.", 
+    benefits: ["Précision optimisée", "Modèles sur-mesure", "Computer Vision / NLP", "Fine-Tuning LLM"], 
+    price: "Sur Devis", 
+    tag: "Intelligence Artificielle" 
+  }, 
+  { 
+    title: "Data Engineering & Pipelines Big Data", 
+    icon: <FaDatabase />, 
+    description: "Modélisation d'architectures de données robustes pour l'ingestion de volumes massifs.", 
+    template: "Création et automatisation de pipelines ETL/ELT avec Apache Airflow, structuration de bases SQL/NoSQL et intégration de bases de données vectorielles.", 
+    benefits: ["Pipelines ETL fluides", "Architecture Big Data", "Bases Vectorielles", "Haute Disponibilité"], 
+    price: "Sur Devis", 
+    tag: "Data Engineering" 
+  }, 
+  { 
+    title: "Industrialisation & Écosystème MLOps", 
+    icon: <FaCogs />, 
+    description: "Transition fluide de vos modèles de l'environnement de recherche à la production.", 
+    template: "Conteneurisation via Docker/Kubernetes, versioning de datasets avec DVC, tracking d'expériences avec MLflow et déploiement d'API d'inférence via FastAPI.", 
+    benefits: ["Déploiement Docker", "Tracking MLflow", "API FastAPI robustes", "CI/CD pour la Data"], 
+    price: "Sur Devis", 
+    tag: "MLOps & Cloud" 
+  }, 
+  { 
+    title: "Business Intelligence & Dataviz", 
+    icon: <FaChartLine />, 
+    description: "Traduction de vos flux de données brutes en indicateurs stratégiques exploitables.", 
+    template: "Création de dashboards analytiques interactifs sous Streamlit ou PowerBI et modélisation de statistiques prédictives pour l'aide à la décision.", 
+    benefits: ["Dashboards Interactifs", "KPIs Stratégiques", "Analyses Prédictives", "Aide à la Décision"], 
+    price: "Sur Devis", 
+    tag: "Data Analytics" 
+  }, 
+]; 
 
-// Helper pour la modale
-function getServiceKey(title) {
-  const t = title.trim();
-  if (t.includes("image de marque")) return "Gestion de image de marque";
-  if (t.includes("MCO")) return "Maintien en Condition Opérationnelle (MCO)";
-  if (t.includes("Interface")) return "Interface Client-Technique";
-  if (t.includes("Support")) return "Support & Continuité de Service";
-  return "autre";
+export default function Services() { 
+  const [modalOpen, setModalOpen] = useState(false); 
+  const [selectedService, setSelectedService] = useState(""); 
+
+  const handleQuoteClick = (title) => { 
+    setSelectedService(title); 
+    setModalOpen(true); 
+  }; 
+
+  return ( 
+    <section id="services" className="py-24 px-6 bg-slate-50 dark:bg-slate-950 transition-colors duration-300"> 
+      <div className="max-w-6xl mx-auto"> 
+        
+        {/* En-tête de section épuré (Bleu & Blanc) */}
+        <div className="text-center mb-16"> 
+          <span className="text-blue-600 dark:text-blue-400 font-mono font-bold tracking-widest uppercase text-xs">Solutions Technologiques</span> 
+          <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mt-2 tracking-tight"> 
+            CATALOGUE DE <span className="bg-gradient-to-r from-blue-600 to-cyan-500 text-transparent bg-clip-text">SERVICES</span> 
+          </h2> 
+          <div className="h-1 w-20 bg-blue-600 mx-auto mt-4 mb-6 rounded-full"></div> 
+        </div> 
+
+        {/* Grille des services */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8"> 
+          {services.map((service, idx) => ( 
+            <div 
+              key={idx} 
+              className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-8 shadow-sm dark:shadow-xl hover:shadow-blue-500/5 transition-all duration-300 flex flex-col group" 
+            > 
+              <div className="flex justify-between items-start mb-6"> 
+                {/* Icône enveloppée dans un bloc bleu épuré */}
+                <div className="text-4xl text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/40 p-4 rounded-xl group-hover:scale-110 transition-transform"> 
+                  {service.icon} 
+                </div> 
+                <span className="text-[10px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-500 px-3 py-1 rounded-full uppercase tracking-widest"> 
+                  {service.tag} 
+                </span> 
+              </div> 
+
+              <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-3"> 
+                {service.title} 
+              </h3> 
+              
+              <p className="text-slate-500 dark:text-slate-400 text-sm mb-6 leading-relaxed"> 
+                {service.description} 
+              </p> 
+
+              {/* Encadré d'ingénierie */}
+              <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-xl mb-6 border-l-4 border-blue-500 transition-colors"> 
+                <span className="text-[10px] text-blue-600 dark:text-blue-400 font-black uppercase mb-1 block">Protocole de développement</span> 
+                <p className="text-xs text-slate-600 dark:text-slate-400 italic leading-relaxed">{service.template}</p> 
+              </div> 
+
+              {/* Avantages clés */}
+              <div className="grid grid-cols-2 gap-3 mb-8"> 
+                {service.benefits.map((b, i) => ( 
+                  <div key={i} className="flex items-center gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300"> 
+                    <FaCheck className="text-emerald-500 text-sm flex-shrink-0" /> 
+                    {b} 
+                  </div> 
+                ))} 
+              </div> 
+
+              {/* Boutons d'action mis à niveau */}
+              <div className="flex flex-col sm:flex-row gap-3 mt-auto"> 
+                <button 
+                  onClick={() => handleQuoteClick(service.title)} 
+                  className="flex-1 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all shadow-md shadow-blue-500/10 hover:shadow-blue-500/20 active:scale-98 text-sm" 
+                > 
+                  Demander un devis 
+                </button> 
+                <a 
+                  href={`mailto:christian.azipenza@://gmail.com de service : ${service.title}`} 
+                  className="flex items-center justify-center gap-2 px-6 py-3.5 border-2 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 rounded-xl font-bold hover:border-blue-600 hover:text-blue-600 dark:hover:border-blue-400 dark:hover:border-blue-400 transition-all" 
+                  aria-label="Contacter par email"
+                > 
+                  <FaEnvelope /> 
+                </a> 
+              </div> 
+            </div> 
+          ))} 
+        </div> 
+
+        {/* Modal de demande de devis */}
+        <QuoteModal isOpen={modalOpen} onClose={() => setModalOpen(false)} defaultService={selectedService} /> 
+      </div> 
+    </section> 
+  ); 
 }
-
-export default function Services() {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [selectedService, setSelectedService] = useState("");
-
-  const handleQuoteClick = (serviceKey) => {
-    setSelectedService(serviceKey);
-    setModalOpen(true);
-  };
-
-  return (
-    <section id="services" className="py-16 px-4 bg-white dark:bg-black transition-colors duration-500">
-      <div className="max-w-6xl mx-auto">
-        <div className="mb-12 text-center">
-          <h2 className="text-3xl md:text-4xl font-extrabold mt-12 bg-gradient-to-r from-red-700 via-red-500 to-red-300 bg-clip-text text-transparent inline-block">
-            Mes Services
-          </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400 font-medium max-w-2xl mx-auto mt-4">
-            Allier la rigueur technique de la maintenance système à la finesse des relations publiques.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-10">
-          {services.map((service, idx) => (
-            <div
-              key={idx}
-              className="bg-slate-50 dark:bg-zinc-900 rounded-3xl shadow-xl p-8 flex flex-col items-center text-center border border-gray-200 dark:border-zinc-800 transition-all duration-500 hover:-translate-y-2 group"
-            >
-              <div className="text-6xl mb-4 text-red-600 dark:text-red-500 group-hover:scale-110 transition-transform duration-300">
-                {service.icon}
-              </div>
-
-              <h3 className="text-2xl font-extrabold mb-2 text-gray-900 dark:text-white tracking-tight">
-                {service.title}
-              </h3>
-
-              <p className="text-gray-600 dark:text-gray-400 mb-4 text-sm leading-relaxed">
-                {service.description}
-              </p>
-
-              <div className="mb-4 p-3 bg-gray-100 dark:bg-zinc-800 rounded-xl text-xs text-indigo-600 dark:text-indigo-400 font-semibold italic">
-  <span className="block text-gray-500 dark:text-gray-500 mb-1 uppercase tracking-widest text-[10px]">Exemple / Template :</span>
-  {service.template}
-</div>
-              <div className="mb-6 flex flex-wrap justify-center gap-2">
-                {service.benefits.map((b, i) => (
-                  <span key={i} className="bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-full px-3 py-1 text-xs font-bold shadow-sm">
-                    {b}
-                  </span>
-                ))}
-              </div>
-
-              <div className="mt-auto w-full flex flex-col gap-3">
-                <div className="mb-2 text-lg font-bold text-green-600 dark:text-green-500">
-                  Tarif : {service.price}
-                </div>
-                
-                {/* Bouton 1 : Devis (Ouvre la modale) */}
-                <button
-                  onClick={() => handleQuoteClick(getServiceKey(service.title))}
-                  className="w-full py-3 bg-red-600 text-white rounded-xl font-bold shadow-lg hover:bg-red-700 transition-all transform active:scale-95"
-                >
-                  Demander un devis
-                </button>
-
-                {/* Bouton 2 : Mail (Ouvre le logiciel de mail) */}
-                <a
-                  href={`mailto:ingebalouiscar@gmail.com?subject=Information sur ${service.title}`}
-                  className="flex items-center justify-center gap-2 w-full py-3 border-2 border-red-600 dark:border-red-500 text-red-600 dark:text-red-500 rounded-xl font-bold hover:bg-red-600 hover:text-white dark:hover:bg-red-500 dark:hover:text-white transition-all duration-300"
-                >
-                  <FaEnvelope /> Contacter moi
-                </a>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <QuoteModal
-          isOpen={modalOpen}
-          onClose={() => setModalOpen(false)}
-          defaultService={selectedService}
-        />
-      </div>
-    </section>
-  );
-}
-
-  

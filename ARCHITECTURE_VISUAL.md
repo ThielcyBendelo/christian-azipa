@@ -440,7 +440,7 @@ VPS (MANUAL)
 ## 📊 File Structure (Security-focused)
 
 ```
-louiscar-web/
+bompikiliki/
 │
 ├── 📖 Documentation/
 │   ├── START_HERE.md ..................... COMMENCEZ ICI!

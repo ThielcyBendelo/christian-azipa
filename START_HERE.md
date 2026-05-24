@@ -8,7 +8,7 @@ Ouvrir VS Code:
 
 ```bash
 # 1. Ouvrir le projet
-cd louiscar-web
+cd bompikiliki
 
 # 2. Ouvrir App.jsx
 code src/App.jsx

@@ -1,21 +1,12 @@
 // Chemins des images - fichiers servis depuis le dossier public/
-export const projet1 = '/images/projet1.jpg';
-export const projet2 = '/images/projet2.png';
-export const projet3 = '/images/projet3.jpg';
-export const projet4 = '/images/projet4.jpg';
-export const projet5 = '/images/projet5.webp';
-export const projet6 = '/images/projet6.jpg';
-export const predictiveMaintenance = '/images/predictive-maintenance.png';
-export const profileImage = '/images/louiscar.jpeg';
-export const profile1Image = '/images/louiscar.jpeg';
+export const profileImage = '/images/irzap.jpeg';
+export const profile1Image = '/images/azip_about.png';
 export const bgImage = '/images/background.jpg';
-export const programmationImage = '/images/image.programmation2.jpg';
-export const reactLogo = '/images/react.svg';
-export const logoImage = '/images/logolouiscar.jpeg';
-export const logoImages = '/images/logolouiscar.jpeg';
+export const logoImage = '/images/logo_azip.png';
+export const logoImages = '/images/logo_azip.png';
 
-export const about =
-  "Expert en relations publiques doté d'une solide expertise en maintenance système, j'assure la synergie entre la performance technique de nos outils et le rayonnement de notre agence. Mon rôle : garantir que nos systèmes ne tombent jamais et que nos partenariats ne cessent de croître.";
+export const about = "Ingénieur en Intelligence Artificielle et Data Sciences au sein de MUAMOKEL AGENCY, je combine une expertise algorithmique pointue avec une solide maîtrise des architectures Big Data et des pipelines MLOps. Au cœur de l'agence, je conçois des modèles de Deep Learning sur-mesure et je transforme des flux de données complexes en solutions prédictives hautement performantes. Mon rôle consiste à bâtir des systèmes d'automatisation intelligents et industrialisés qui sécurisent, valorisent et propulsent le patrimoine informatique de nos partenaires dans un écosystème technologique axé sur l'innovation.";
+
 
 export const skills = [
   'Négociation',
@@ -43,159 +34,47 @@ export const skills = [
 
 export const experiences = [
   {
-    role: 'Communication & Image',
+    role: 'Agent de Cybersécurité & Infra',
     company: 'Muamokel Agency',
-    year: '2026-Présent',
-    type: 'Stratégie de communication externe',
+    year: '2023 - Présent',
+    type: 'security', // Utilisé pour l'icône de bouclier
     description:
-      "Concevoir et diffuser le narratif de l'agence (expertises en code, nouvelles technologies, transformation digitale) auprès des médias et des partenaires.",
+      'Responsable de la cellule de défense numérique : déploiement de protocoles SSL/TLS, gestion des architectures VPN sécurisées et mise en place de politiques de sauvegarde immuables pour garantir la continuité d\'activité (DRP).',
   },
-
   {
-    role: 'Communication & Image',
+    role: 'Administrateur Systèmes & Cloud',
     company: 'Muamokel Agency',
-    year: '2025-Présent',
-    type: 'Événementiel et Presse ',
+    year: '2025 - Présent',
+    type: 'maintenance', // Utilisé pour l'icône de serveur
     description:
-      "Organiser des webinaires, des conférences ou des lancements de produits informatiques et rédiger des communiqués de presse ciblés.",
+      'Administration avancée d\'infrastructures Cloud (AWS, Azure, O365). Optimisation du parc informatique et supervision du Helpdesk technique pour garantir une haute disponibilité des services de développement.',
   },
-
   {
-    role: 'Communication & Image',
+    role: 'Chargé de Communication de Crise',
     company: 'Muamokel Agency',
-    year: '2025-Présent',
-    type: 'Veille et Gestion de crise',
+    year: '2025 - Présent',
+    type: 'contract', 
     description:
-      " Anticiper les risques de réputation liés à des bugs ou des cyberattaques et mettre en place des plans de communication de crise. ",
-  },
-
-  {
-    role: 'Support & Infrastructure',
-    company: 'Mwamokel Agency',
-    year: '2025-Présent',
-    type: 'Entretien du parc informatique',
-    description:
-      "Installer, configurer et mettre à jour le matériel (serveurs, PC) et les licences logicielles nécessaires au développement.",
+      'Expert en gestion de réputation post-incident : élaboration de stratégies de communication face aux risques cyber et pilotage du narratif technologique de l\'agence auprès des partenaires stratégiques.',
   },
   {
-    role: 'Support & Infrastructure',
-    company: 'Mwamokel Agency',
-    year: '2023-Présent',
-    type: 'Sécurité et Sauvegarde',
+    role: 'Coordonnateur Événementiel Tech',
+    company: 'Muamokel Agency',
+    year: '2025 - Présent',
+    type: 'full-time',
     description:
-      'Mettre en place des solutions de cybersécurité, gérer les VPN, les certificats SSL et assurer la pérennité des données par des sauvegardes régulières.',
+      'Organisation de conférences spécialisées en transformation digitale et gestion des relations presse pour le lancement de solutions logicielles innovantes.',
   },
   {
-    role: 'Support & Infrastructure',
-    company: 'Mwamokel Agency',
-    year: '2025-Présent',
-    type: 'Support technique (Helpdesk)',
+    role: 'Stratège en Image de Marque',
+    company: 'Muamokel Agency',
+    year: '2026 - Présent',
+    type: 'full-time',
     description:
-      "Diagnostiquer et réparer les pannes réseaux ou hardware pour minimiser les interruptions de service.",
-  },
-
- {
-    role: 'Support & Infrastructure',
-    company: 'Mwamokel Agency',
-    year: '2025-Présent',
-    type: 'Gestion des accès Cloud :',
-    description:
-      "Administrer les services Cloud (Office 365, AWS, Azure) pour garantir l'accessibilité des projets n'importe où.",
-  },
-
+      'Définition du positionnement de marque "High-Tech" de l\'agence. Valorisation de l\'expertise en développement et nouvelles technologies sur le marché africain et international.',
+  }
 ];
 
-export const projets = [
-  {
-    titre: 'Portfolio React',
-    description: 'Site personnel pour présenter mes projets et compétences.',
-    image: projet1,
-    lienDemo: 'https://github.com/ThielcyBendelo',
-    lienGithub: 'https://github.com/ThielcyBendelo',
-    technologies: ['React', 'Tailwind', 'JavaScript'],
-    fonctionnalites: [
-      'Design responsive et moderne',
-      'Animations fluides avec Framer Motion',
-      'Navigation intuitive',
-      'Optimisé pour les performances',
-    ],
-  },
-  {
-    titre: 'Application Todo',
-    description:
-      'Gestion de tâches avec React et localStorage pour une productivité optimale.',
-    image: projet2,
-    lienDemo: 'https://github.com/ThielcyBendelo/todo',
-    lienGithub: 'https://github.com/ThielcyBendelo/todo',
-    technologies: ['React', 'LocalStorage', 'JavaScript'],
-    fonctionnalites: [
-      'Ajout et suppression de tâches',
-      'Marquage comme terminé',
-      'Sauvegarde locale',
-      'Interface utilisateur intuitive',
-    ],
-  },
-  {
-    titre: 'E-commerce Platform',
-    description:
-      'Plateforme de commerce électronique moderne et responsive avec gestion complète des produits.',
-    image: projet3,
-    lienDemo: 'https://github.com/ThielcyBendelo/ecommerce',
-    lienGithub: 'https://github.com/ThielcyBendelo/ecommerce',
-    technologies: ['React', 'Node.js', 'MongoDB'],
-    fonctionnalites: [
-      'Catalogue de produits dynamique',
-      "Panier d'achat interactif",
-      'Gestion des commandes',
-      'Système de paiement sécurisé',
-    ],
-  },
-  {
-    titre: 'Digital Transformation',
-    description:
-      'Solution de transformation numérique pour entreprises avec intelligence artificielle intégrée.',
-    image: projet4,
-    lienDemo: 'https://github.com/ThielcyBendelo/digital-transform',
-    lienGithub: 'https://github.com/ThielcyBendelo/digital-transform',
-    technologies: ['React', 'Cloud', 'AI'],
-    fonctionnalites: [
-      'Analyse de données avancée',
-      'Tableaux de bord interactifs',
-      'Intégration cloud native',
-      'Intelligence artificielle',
-    ],
-  },
-  {
-    titre: 'Système de Maintenance',
-    description:
-      'Application de gestion de maintenance préventive avec IoT et surveillance en temps réel.',
-    image: predictiveMaintenance,
-    lienDemo: 'https://github.com/ThielcyBendelo/maintenance',
-    lienGithub: 'https://github.com/ThielcyBendelo/maintenance',
-    technologies: ['React', 'Python', 'IoT'],
-    fonctionnalites: [
-      'Surveillance IoT en temps réel',
-      'Maintenance prédictive',
-      'Alertes automatiques',
-      'Rapports détaillés',
-    ],
-  },
-  {
-    titre: 'Formation Tech',
-    description:
-      "Plateforme d'apprentissage en ligne pour développeurs avec cours interactifs et certifications.",
-    image: projet6,
-    lienDemo: 'https://github.com/monportfolio/formation',
-    lienGithub: 'https://github.com/monportfolio/formation',
-    technologies: ['React', 'Express', 'MongoDB'],
-    fonctionnalites: [
-      'Cours interactifs et vidéos',
-      'Système de progression',
-      'Certifications en ligne',
-      "Communauté d'apprentissage",
-    ],
-  },
-];
 
 export const works = [
   // 'Direction de projet e-commerce multilingue (équipe de 10 développeurs)',
@@ -207,19 +86,19 @@ export const works = [
 ];
 
 export const contact = [
-  { label: 'Email', link: 'ingebalouiscar@gmail.com' },
+  { label: 'Email', link: 'ingebachritian@gmail.com' },
   {
     label: 'LinkedIn',
-    link: 'https://linkedin.com/in/louiscar-699734222?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app',
+    link: 'https://linkedin.com/in/chritian-699734222?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app',
   },
   // { label: 'GitHub', link: 'https://github.com/' },
   {
     label: 'Instagram',
-    link: 'https://instagram.com/louiscarfernandez?igsh=MjB3ODdzMDI4dGto',
+    link: 'https://instagram.com/chritianfernandez?igsh=MjB3ODdzMDI4dGto',
   },
   {
     label: 'Facebook',
-    link: 'https://facebook.com/louiscar.fernandez',
+    link: 'https://facebook.com/chritian.fernandez',
   },
   // {
   //   label: 'WhatsApp',

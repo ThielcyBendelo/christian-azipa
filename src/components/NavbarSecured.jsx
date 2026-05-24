@@ -1,567 +1,98 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { GiEagleEmblem, GiLoveInjection } from 'react-icons/gi';
-import { FaSignInAlt, FaSignOutAlt, FaTachometerAlt } from 'react-icons/fa';
-import notificationService from '../services/notificationService';
+import { FaBrain, FaHome, FaUser, FaCode, FaBriefcase, FaTools, FaBars, FaTimes } from 'react-icons/fa';
 import audioService from '../services/audioService';
 import analyticsService from '../services/analyticsService';
-import authService from '../services/authService';
-import { FaHome, FaUser, FaCode, FaBriefcase, FaTools, FaBars, FaTimes } from 'react-icons/fa';
-
-
 
 export default function NavbarSecured() {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
-  const [audioEnabled, setAudioEnabled] = useState(audioService.isEnabled());
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null);
-  const [showUserMenu, setShowUserMenu] = useState(false);
-  const [theme, setTheme] = useState(() => {
-    try {
-      const stored = localStorage.getItem('theme');
-      if (stored) return stored;
-      if (
-        window.matchMedia &&
-        window.matchMedia('(prefers-color-scheme: dark)').matches
-      )
-        return 'dark';
-    } catch {
-      // ignore errors (e.g., SSR or private mode)
-    }
-    return 'light';
-  });
-  // Log après tous les hooks
-  console.log('[NavbarSecured] Render:', { isAuthenticated, currentUser });
-  useEffect(() => {
-    // Initialiser la session automatiquement au chargement
-    authService.initialize().then(() => {
-      const loggedIn = authService.isLoggedIn();
-      const user = authService.getCurrentUser();
-      setIsAuthenticated(loggedIn);
-      setCurrentUser(user);
-      console.log('[NavbarSecured] INIT:', { loggedIn, user });
-    });
-
-    // Écouter les changements d'authentification
-    const interval = setInterval(() => {
-      const loggedIn = authService.isLoggedIn();
-      const user = authService.getCurrentUser();
-      setIsAuthenticated(loggedIn);
-      setCurrentUser(user);
-      console.log('[NavbarSecured] INTERVAL:', { loggedIn, user });
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    try {
-      document.documentElement.setAttribute('data-theme', theme);
-      localStorage.setItem('theme', theme);
-    } catch {
-      // ignore write errors
-    }
-  }, [theme]);
-
-  const toggleTheme = () => {
-    const newTheme = theme === 'dark' ? 'light' : 'dark';
-    setTheme(newTheme);
-    audioService.playClick();
-    analyticsService.trackEvent('theme_toggle', {
-      theme: newTheme,
-      category: 'user_interface',
-    });
-    notificationService.info(
-      `Mode ${newTheme === 'dark' ? 'sombre' : 'clair'} activé`,
-      { autoClose: 2000, icon: newTheme === 'dark' ? '🌙' : '☀️' }
-    );
-  };
-
-  const toggleAudio = async () => {
-    const newState = audioService.toggle();
-    setAudioEnabled(newState);
-
-    analyticsService.trackEvent('audio_toggle', {
-      enabled: newState,
-      category: 'user_preferences',
-    });
-
-    if (newState) {
-      audioService.playSuccess();
-      notificationService.success('🔊 Sons activés', { autoClose: 2000 });
-    } else {
-      notificationService.info('🔇 Sons désactivés', { autoClose: 2000 });
-    }
-  };
 
   const toggleMenu = () => {
     const newState = !isOpen;
     setIsOpen(newState);
     audioService.playClick();
-    analyticsService.trackEvent('mobile_menu_toggle', {
-      isOpen: newState,
-      category: 'navigation',
-    });
+    analyticsService.trackEvent('mobile_menu_toggle', { isOpen: newState, category: 'navigation' });
   };
 
-  const handleLogin = () => {
-    navigate('/login');
-    setIsOpen(false);
-    audioService.playNavigate();
-  };
-
-  const handleRegister = () => {
-    navigate('/register');
-    setIsOpen(false);
-    audioService.playNavigate();
-  };
-
-  const handleDashboard = () => {
-    if (isAuthenticated) {
-      navigate('/dashboard');
-      setIsOpen(false);
-      audioService.playNavigate();
-      notificationService.info('Redirection vers votre tableau de bord...', {
-        autoClose: 2000,
-      });
-    } else {
-      notificationService.warning(
-        '🔐 Veuillez vous connecter pour accéder au dashboard',
-        {
-          autoClose: 3000,
-        }
-      );
-      navigate('/login');
-    }
-  };
-
-  const handleLogout = async () => {
-    try {
-      await authService.logout();
-      setIsAuthenticated(false);
-      setCurrentUser(null);
-      setShowUserMenu(false);
-      setIsOpen(false);
-      notificationService.success('✓ Déconnexion réussie', { autoClose: 2000 });
-      navigate('/');
-      audioService.playSuccess();
-    } catch {
-      notificationService.error('Erreur lors de la déconnexion', {
-        autoClose: 3000,
-      });
-    }
-  };
-
-  // ...existing code...
   const handleNavClick = (section, e) => {
     e.preventDefault();
     if (isOpen) setIsOpen(false);
     audioService.playNavigate();
-    analyticsService.trackEvent('navigation_click', {
-      section,
-      category: 'navigation',
-    });
+    analyticsService.trackEvent('navigation_click', { section, category: 'navigation' });
     if (section.startsWith('/')) {
       navigate(section);
     }
   };
 
   // Navigation items
-  // Structure professionnelle avec sous-menus
-
-const navGroups = [
-  {
-    items: [
-      { href: '/', label: 'Accueil', icon: <FaHome /> },
-    ],
-  },
-
-  {
-    items: [
-      { href: '/about', label: 'À propos', icon: <FaUser /> },
-    ],
-  },
-
-  {
-    items: [
-      { href: '/skills', label: 'Compétences', icon: <FaCode /> },
-    ],
-  },
-  {
-    items: [
-      { href: '/experience', label: 'Expérience', icon: <FaBriefcase /> },
-    ],
-  },
-  {
-    items: [
-      { href: '/services', label: 'Services', icon: <FaTools /> },
-    ],
-  },
-];
-
-
-
+  const navItems = [
+    { href: '/', label: 'Accueil', icon: <FaHome /> },
+    { href: '/about', label: 'À propos', icon: <FaUser /> },
+    { href: '/skills', label: 'Compétences', icon: <FaCode /> },
+    { href: '/experience', label: 'Expérience', icon: <FaBriefcase /> },
+    { href: '/services', label: 'Services', icon: <FaTools /> },
+  ];
 
   return (
-    <>
-    <nav className="fixed top-0 left-0 right-0 bg-white/90 text-black-600 backdrop-blur-md z-50 border-b border-red-500 to-red-300 to-red-200 -200 shadow-[0_6px_20px_-5px_rgba(239,68,68,0.2)]">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div className="flex justify-between h-16 items-center">
-            {/* Logo */}
-            <div
-              className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity"
-              onClick={() => {
-                navigate('/');
-                setIsOpen(false);
-              }}
-            >
-              
-              <span className="text-3xl font-bold mb-2 bg-gradient-to-r from-red-700 to-red-500 to-red-300 text-transparent bg-clip-text"
-                style={{ 
-                          fontFamily: "'Sancreek', cursive", 
-                          fontWeight: 400,
-                          fontStyle: "normal",
-                          display: "inline-block",
-                          filter: "drop-shadow(2px 2px 4px rgba(0,0,0,0.3))",
-
-                }}
-                >
-                 Mon Portfolio
+    <nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-blue-500/20 bg-white/90 dark:bg-slate-950/90 backdrop-blur-lg shadow-sm">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-20 items-center">
+          
+          {/* Logo avec identité IA & Data Science (Christian AZIPENZA) */}
+          <div className="flex items-center gap-3 cursor-pointer group" onClick={() => navigate('/')}>
+            <div className="p-2.5 bg-blue-600 rounded-xl group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(37,99,235,0.4)] text-white">
+              <FaBrain className="text-xl" />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-lg font-black tracking-wider text-blue-600 dark:text-blue-400 uppercase leading-tight">
+                C. AZIPENZA
               </span>
-            </div>
-            {/* Desktop Navigation avec sous-menus */}
-            <div className="hidden md:flex md:items-center gap-6">
-              {navGroups.map((group) => (
-                <div key={group.label} className="relative group">
-                  <button
-                    className="text-from-red-700 to-red-700 to-red-500  hover:text-from-white font-blue-400 transition-colors"
-                    style={{
-                      cursor: group.items?.length > 1 ? 'pointer' : 'default',
-                    }}
-                  >
-                    {group.label}
-                  </button>
-                  {group.items?.length > 1 && (
-                    <div className="absolute left-0 mt-2 min-w-[180px] bg-dark-300 border border-gray-700 rounded-xl shadow-2xl z-20 opacity-0 group-hover:opacity-100 group-hover:translate-y-2 transition-all duration-300">
-                      {group.items.map((item) => (
-                        <a
-                          key={item.href}
-                          href={item.href}
-                          onClick={(e) => handleNavClick(item.href, e)}
-                          className="flex items-center gap-2 px-5 py-3 text-from-red-700 to-red-500 to-red-300 hover:text-red-500 hover:bg-purple/20 text-base rounded-xl transition-all duration-200 font-medium group-hover:scale-105"
-                        >
-                          <span className="text-lg">{item.icon}</span> {item.label}
-                        </a>
-                      ))}
-                    </div>
-                  )}
-                  {group.items?.length === 1 && (
-                    <a
-                      href={group.items[0].href}
-                      onClick={(e) => handleNavClick(group.items[0].href, e)}
-                      className="text-black-500 hover:text-red-500 text-sm px-3 py-2 rounded-lg transition-colors"
-                    >
-                      {group.items[0].icon} {group.items[0].label}
-                    </a>
-                  )}
-                </div>
-              ))}
-              {/* Bouton Clients visible uniquement pour admin */}
-              {isAuthenticated && currentUser?.role === 'admin' && (
-                <button
-                  type="button"
-                  onClick={() => navigate('/clients')}
-                  className="text-black-300 hover:text-red-500 transition-colors text-sm font-semibold px-3 py-1 rounded-lg border border-purple-500/40 bg-purple-500/10 ml-2"
-                >
-                  Clients
-                </button>
-              )}
-            </div>
-            {/* Controls & Auth */}
-            <div className="flex items-center gap-2 sm:gap-3">
-              {/* Audio toggle */}
-              <button
-                onClick={toggleAudio}
-                onMouseEnter={() => audioService.playHover()}
-                aria-label="Basculer sons"
-                className="p-2 rounded-md text-black-500 hover:text-red-500 transition-colors hidden sm:block"
-                title={
-                  audioEnabled ? 'Désactiver les sons' : 'Activer les sons'
-                }
-              >
-                {audioEnabled ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M9 12a3 3 0 013-3m-3 3a3 3 0 01-3-3m3 3v4l-6-4H3a1 1 0 01-1-1V8a1 1 0 011-1h3l6-4v4"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M5.586 15H4a1 1 0 01-1-1V8a1 1 0 011-1h1.586l4.707-4.707C10.923 1.663 12 2.109 12 3v18c0 .891-1.077 1.337-1.707.707L5.586 17M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"
-                    />
-                  </svg>
-                )}
-              </button>
-              {/* Theme toggle */}
-              <button
-                onClick={toggleTheme}
-                onMouseEnter={() => audioService.playHover()}
-                aria-label="Basculer thème"
-                className="p-2 rounded-md text-red-500 to-red-300 to-red-200 hover:text-red-500 transition-colors hidden sm:block"
-              >
-                {theme === 'dark' ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-                    />
-                  </svg>
-                )}
-              </button>
-              {/* Dashboard Button (Secure) */}
-              {isAuthenticated && (
-                <button
-                  onClick={handleDashboard}
-                  onMouseEnter={() => audioService.playHover()}
-                  className="hidden sm:flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple to-pink text-white rounded-lg hover:shadow-lg hover:shadow-purple-500/40 transition-all text-sm font-semibold"
-                  title="Accéder au tableau de bord"
-                >
-                  <FaTachometerAlt className="h-4 w-4" />
-                  Dashboard
-                </button>
-              )}
-              {/* User Menu or Login Buttons */}
-              {isAuthenticated ? (
-                <div className="relative">
-                  <button
-                    onClick={() => setShowUserMenu(!showUserMenu)}
-                    onMouseEnter={() => audioService.playHover()}
-                    className="flex items-center gap-2 px-3 py-2 bg-dark-200 border border-gray-600/50 rounded-lg hover:bg-dark-300 transition-colors text-sm"
-                  >
-                    <div className="w-6 h-6 rounded-full bg-gradient-to-r from-purple to-pink flex items-center justify-center text-white text-xs font-bold">
-                      {currentUser?.email?.[0]?.toUpperCase() || 'U'}
-                    </div>
-                    <span className="hidden sm:inline text-red-500">
-                      {currentUser?.email?.split('@')[0] || 'User'}
-                    </span>
-                  </button>
-                  {/* Dropdown Menu */}
-                  {showUserMenu && (
-                    <div className="absolute right-0 mt-2 w-48 bg-dark-300 border border-red-600/50 rounded-lg shadow-lg overflow-hidden z-50">
-                      <div className="px-4 py-3 border-b border-gray-600/30">
-                        <p className="text-sm text-gray-300">
-                          Connecté en tant que
-                        </p>
-                        <p className="text-sm font-semibold text-white truncate">
-                          {currentUser?.email}
-                        </p>
-                      </div>
-                      <button
-                        onClick={handleDashboard}
-                        className="w-full px-4 py-2 text-left text-sm text-gray-300 hover:bg-dark-200 hover:text-white transition-colors flex items-center gap-2"
-                      >
-                        <FaTachometerAlt className="h-4 w-4" />
-                        Mon Dashboard
-                      </button>
-                      <button
-                        onClick={handleLogout}
-                        className="w-full px-4 py-2 text-left text-sm text-red-400 hover:bg-dark-200 transition-colors flex items-center gap-2 border-t border-gray-600/30"
-                      >
-                        <FaSignOutAlt className="h-4 w-4" />
-                        Déconnexion
-                      </button>
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <div className="hidden sm:flex items-center gap-2">
-                  <button
-                    onClick={handleLogin}
-                    onMouseEnter={() => audioService.playHover()}
-                    className="flex items-center gap-2 px-3 py-2 text-black-500 border border-red-600/50 rounded-lg hover:text-white hover:border-purple/50 transition-colors text-sm"
-                  >
-                    <FaSignInAlt className="h-4 w-4" />
-                    Connexion
-                  </button>
-                  <button
-                    onClick={handleRegister}
-                    onMouseEnter={() => audioService.playHover()}
-                    className="px-4 py-2 bg-gradient-to-r from-purple to-pink text-red-700 to-red-500 to-red-300 rounded-lg hover:shadow-lg hover:shadow-purple-500/40 transition-all text-sm font-semibold"
-                  >
-                    S'inscrire
-                  </button>
-                </div>
-              )}
-
-{/* Section Mobile : Thème + Menu */}
-<div className="md:hidden flex items-center gap-2">
-  {/* Bouton de changement de thème */}
-  <button
-    onClick={toggleTheme}
-    className="p-2 rounded-lg bg-red-700 dark:bg-gray-400 text-black dark:text-white transition-colors"
-  >
-    {theme === 'dark' ? '☀️' : '🌙'}
-  </button>
-
-              {/* Mobile menu button */}
-              <button
-                onClick={toggleMenu}
-                onMouseEnter={() => audioService.playHover()}
-                className="md:hidden p-2 rounded-md text-red-700 to-red-500 to-red-300 hover:text-black-500"
-              >
-                {isOpen ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M4 6h16M4 12h16M4 18h16"
-                    />
-                  </svg>
-                )}
-              </button>
+              <span className="text-[10px] font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase">
+                AI & Data Engineer
+              </span>
             </div>
           </div>
-        </div>
-        </div>
-   
-        {/* Mobile menu avec sous-menus professionnels */}
-{isOpen && (
-  <div 
-    className="md:hidden fixed inset-x-0 top-16 bg-white dark:bg-black border-t border-red-500 shadow-2xl z-50 rounded-b-2xl transition-all duration-300"
-    style={{ fontFamily: "'Saira', sans-serif" }}
-  >
-    <div className="px-4 pt-4 pb-6 space-y-3">
-      {navGroups.map((group, idx) => (
-        <div key={idx} className="mb-4">
-          {/* Label du groupe (ex: Navigation) */}
-          {group.label && (
-            <div className="text-xs font-bold uppercase tracking-widest text-red-500 mb-2 pl-2">
-              {group.label}
-            </div>
-          )}
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center gap-1">
+            {navItems.map((item) => (
+              <button
+                key={item.href}
+                onClick={(e) => handleNavClick(item.href, e)}
+                className="flex items-center gap-2 px-4 py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition-all duration-200 font-medium text-sm"
+              >
+                <span className="text-base opacity-70">{item.icon}</span>
+                {item.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Mobile Menu Button */}
+          <div className="md:hidden">
+            <button onClick={toggleMenu} className="text-2xl text-slate-700 dark:text-white p-2">
+              {isOpen ? <FaTimes /> : <FaBars />}
+            </button>
+          </div>
           
-          {group.items.map((item) => (
-            <a
+        </div>
+      </div>
+
+      {/* Mobile Drawer */}
+      {isOpen && (
+        <div className="md:hidden bg-white dark:bg-slate-950 border-t border-slate-100 dark:border-slate-900 p-4 space-y-1 shadow-inner">
+          {navItems.map((item) => (
+            <button
               key={item.href}
-              href={item.href}
               onClick={(e) => handleNavClick(item.href, e)}
-              className="flex items-center gap-4 px-4 py-3 text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-all duration-200"
+              className="w-full flex items-center gap-4 p-3 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-950/20 text-slate-700 dark:text-slate-200 font-medium transition-colors"
             >
-              {/* C'est ici que l'icône s'affiche */}
-              <span className="text-xl text-red-600 dark:text-red-400">
-                {item.icon}
-              </span>
-              <span className="text-lg font-semibold">{item.label}</span>
-            </a>
+              <span className="text-blue-600 dark:text-blue-400">{item.icon}</span>
+              {item.label}
+            </button>
           ))}
         </div>
-      ))}
-
-      {/* Section Authentification / Actions */}
-      <div className="border-t border-gray-200 dark:border-gray-800 pt-4 mt-2">
-        {isAuthenticated ? (
-          <div className="grid grid-cols-1 gap-2">
-            <button
-              onClick={handleDashboard}
-              className="flex items-center gap-3 px-4 py-3 text-purple-600 dark:text-purple-400 font-bold bg-purple-50 dark:bg-purple-900/10 rounded-xl"
-            >
-              <FaTachometerAlt className="text-xl" />
-              Tableau de bord
-            </button>
-            <button
-              onClick={handleLogout}
-              className="flex items-center gap-3 px-4 py-3 text-red-600 font-bold bg-red-50 dark:bg-red-900/10 rounded-xl"
-            >
-              <FaSignOutAlt className="text-xl" />
-              Déconnexion
-            </button>
-          </div>
-        ) : (
-          <div className="grid grid-cols-2 gap-3">
-            <button
-              onClick={handleLogin}
-              className="flex items-center justify-center gap-2 px-4 py-3 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-200 rounded-xl font-bold"
-            >
-              <FaSignInAlt /> Connexion
-            </button>
-            <button
-              onClick={handleRegister}
-              className="px-4 py-3 bg-red-600 text-white rounded-xl font-bold hover:bg-red-700 transition-colors"
-            >
-              S'inscrire
-            </button>
-          </div>
-        )}
-      </div>
-    </div>
-  </div>
-)}
-
-      </nav>
-    </>
+      )}
+    </nav>
   );
 }

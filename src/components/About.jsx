@@ -1,118 +1,124 @@
-import { about } from '../assets/assets.js';
-import {
-  profile1Image as profileImg,
-} from '../assets/assets.js';
-// eslint-disable-next-line no-unused-vars
-import { motion } from 'framer-motion';
-import LazyImage from './LazyImage';
-import GoogleMapsSection from './GoogleMapsSection';
+import { about, profile1Image as profileImg } from '../assets/assets.js'; 
+import { motion } from 'framer-motion'; 
+import { FaBrain, FaDatabase, FaCogs, FaMapMarkerAlt, FaFileDownload, FaChartLine } from 'react-icons/fa'; 
+import LazyImage from './LazyImage'; 
+import GoogleMapsSection from './GoogleMapsSection'; 
 
 export default function About() {
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.3,
-        delayChildren: 0.2,
-      },
-    },
+    visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
   };
 
-  const imageVariants = {
-    hidden: { opacity: 0, scale: 0.8, y: 30 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: 'easeOut',
-      },
-    },
-  };
-
-  const textVariants = {
+  const itemVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: 'easeOut',
-      },
-    },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
   };
 
-  return (
-    <>
-      <motion.section
-        id="about"
-        className="relative pb-20 pt-0 overflow-hidden"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.0 }}
-        variants={containerVariants}
-      >
-      
+  // Liste des spécialités adaptées à l'IA et aux Data Sciences
+  const details = [
+    { 
+      icon: <FaBrain />, 
+      title: "Intelligence Artificielle", 
+      text: "Conception et entraînement d'architectures de réseaux de neurones (Deep Learning, Vision par ordinateur, NLP) pour automatiser des processus décisionnels complexes." 
+    },
+    { 
+      icon: <FaDatabase />, 
+      title: "Data Engineering & Big Data", 
+      text: "Modélisation et maintenance de pipelines ETL robustes. Optimisation du stockage et du requêtage sur des bases de données volumineuses (SQL & NoSQL)." 
+    },
+    { 
+      icon: <FaCogs />, 
+      title: "Écosystème MLOps", 
+      text: "Automatisation du déploiement, du versioning de modèles (DVC) et de la surveillance en production à l'aide de conteneurs Docker et de pipelines CI/CD." 
+    },
+    { 
+      icon: <FaChartLine />, 
+      title: "Business Intelligence", 
+      text: "Traduction de données brutes complexes en indicateurs de performance clés (KPI) exploitables et dashboards interactifs pour la direction stratégique." 
+    },
+  ];
 
-        {/* Content */}
-        <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
-          <motion.div
-            variants={imageVariants}
-            whileHover={{
-              scale: 1.08,
-              rotate: [0, -3, 3, 0],
-              transition: { duration: 0.3 },
-            }}
-          >
-            <LazyImage
-              src={profileImg}
-              alt="Profil"
-              className="w-48 h-48 md:w-64 md:h-64 rounded-full object-cover mb-10 shadow-lg border-4 border-purple hover:scale-105 transition-transform duration-300"
-               style={{ objectPosition: 'center 10%' }}
-              placeholder={
-                <div className="w-48 h-48 md:w-64 md:h-64 rounded-full bg-gradient-to-br from-purple/20 to-pink/20 animate-pulse border-4 border-purple mb-10 shadow-lg" />
-              }
-            />
-          </motion.div>
-          <motion.h2
-            className="text-3xl md:text-4xl font-bold text-center mb-6"
-            variants={textVariants}
-          >
-            <span className="text-4xl md:text-4xl font-extrabold mt-12 bg-gradient-to-r from-red-700 to-red-300 to-red-200">
-              À propos de moi
-            </span>
-          </motion.h2>
-          <motion.p
-            className="text-lg text-gray-400 text-center leading-relaxed max-w-4xl mb-6"
-            variants={textVariants}
-          >
-            {about}
-          </motion.p>
-          <motion.div
-            className="text-base md:text-lg text-gray-400 border-t border-gray-300  text-center max-w-2xl space-y-4"
-            variants={textVariants}
-          >
-            <p className='"border border-purple/40"'>
-              <strong>Expertise complète :</strong> Louiscar.CRP offre une gamme complète de services en relations publiques et en maintenance système, assurant la visibilité de votre marque tout en garantissant la performance et la sécurité de vos infrastructures IT.
-            </p>
-            <p className='"border border-purple/40"'>
-              <strong>Mes cértifications:</strong> Je suis certifié en gestion de projet (PMP), en sécurité informatique (CEH), et en administration système (Linux+), ce qui me permet d’apporter une expertise technique solide à mes fonctions de chargé de relations publiques.
-            </p>
-            <p className='"border border-purple/40"'>
-              <strong>Accompagnement personnalisé :</strong> J'accompagne chaque client dans la définition de sa stratégie de communication et de maintenance, en proposant des solutions sur mesure adaptées à leurs besoins spécifiques et à leur secteur d’activité.
-            </p>
-            <p className='"border border-purple/40"'>
-              <strong>Engagement qualité :</strong> Je respecte les délais et les budgets, tout en assurant une communication transparente et régulière avec mes clients pour garantir leur satisfaction à chaque étape du projet.
-            </p>
-            <p>
-              <strong>Contactez-moi</strong> pour un devis gratuit, une démonstration, ou un rendez-vous dans nos bureaux à Kinshasa. Votre transformation digitale commence ici !
-            </p>
-          </motion.div>
-        </div>
-      </motion.section>
-      <GoogleMapsSection />
-    </>
-  );
+ return (
+  <div className="bg-slate-50 dark:bg-slate-950 pt-24 min-h-screen transition-colors duration-300"> 
+    <motion.section 
+      className="max-w-6xl mx-auto px-6 pb-20" 
+      initial="hidden" 
+      whileInView="visible" 
+      viewport={{ once: true }} 
+      variants={containerVariants}
+    > 
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start"> 
+        
+        {/* Colonne Gauche : Identité Visuelle Christian AZIPENZA */} 
+        <motion.div className="lg:col-span-4 flex flex-col items-center sticky top-28" variants={itemVariants}> 
+          <div className="relative group cursor-pointer"> 
+            {/* Effet de halo haut de gamme : gradient cyber/IA discret et animé */} 
+            <div className="absolute -inset-2 bg-gradient-to-tr from-blue-600 via-cyan-400 to-indigo-500 rounded-[2rem] blur-xl opacity-30 group-hover:opacity-60 transition duration-700 animate-tilt"></div> 
+            
+            {/* Conteneur de l'image style "Squircle / Bento Tech" avec bordure en verre */} 
+            <div className="relative p-1.5 bg-gradient-to-b from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-800 rounded-[2rem] shadow-2xl backdrop-blur-3xl overflow-hidden"> 
+              <LazyImage src={profileImg} alt="Christian AZIPENZA" className="w-56 h-56 md:w-64 md:h-64 rounded-[1.8rem] object-cover transition-transform duration-700 group-hover:scale-105" style={{ objectPosition: 'center 10%' }} /> 
+            </div> 
+            
+            {/* Badge flottant d'expertise IA minimaliste */} 
+            <div className="absolute -bottom-3 -right-3 bg-gradient-to-r from-blue-600 to-cyan-500 p-3.5 rounded-2xl border-4 border-slate-50 dark:border-slate-950 text-white shadow-xl transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6"> 
+              <FaBrain size={20} className="animate-pulse" /> 
+            </div> 
+          </div> 
+          
+          {/* Carte d'identité synthétique style Premium Glassmorphism */} 
+          <div className="mt-8 text-center bg-white/70 dark:bg-slate-900/40 p-6 rounded-3xl border border-slate-200/60 dark:border-slate-800/60 w-full backdrop-blur-xl shadow-xl shadow-slate-100 dark:shadow-none relative overflow-hidden group/card"> 
+            {/* Ligne d'accent lumineuse en haut de la carte */} 
+            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-blue-500/40 to-transparent"></div> 
+            <h3 className="text-slate-900 dark:text-white font-black text-2xl tracking-tight uppercase font-sans"> C. AZIPENZA </h3> 
+            <p className="mt-1 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500 dark:from-blue-400 dark:to-cyan-400 font-mono text-xs uppercase tracking-[0.2em] font-bold"> AI & Data Engineer </p> 
+            <div className="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800/60 flex items-center justify-center gap-2 text-slate-500 dark:text-slate-400 text-xs tracking-wide"> 
+              <FaMapMarkerAlt className="text-blue-500 animate-bounce" style={{ animationDuration: '3s' }} /> 
+              <span>KINSHASA, RDC</span> 
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span> 
+            </div> 
+            
+            {/* Bouton d'action principal ultra-moderne */} 
+            <button className="mt-6 flex items-center justify-center gap-3 w-full py-4 bg-slate-900 dark:bg-slate-100 hover:bg-blue-600 dark:hover:bg-blue-500 text-white dark:text-slate-950 dark:hover:text-white text-xs font-bold uppercase tracking-wider rounded-2xl transition-all duration-300 shadow-lg shadow-slate-900/10 dark:shadow-none hover:-translate-y-0.5 active:translate-y-0"> 
+              <FaFileDownload className="text-sm" /> 
+              <span>Télécharger le CV</span> 
+            </button> 
+          </div> 
+        </motion.div> 
+
+        {/* Colonne Droite : Dossier de Compétences */} 
+        <div className="lg:col-span-8"> 
+          <motion.div variants={itemVariants}> 
+            <h2 className="text-4xl md:text-6xl font-black text-slate-900 dark:text-white mb-6 uppercase tracking-tight leading-none"> Vision & <br /> <span className="bg-gradient-to-r from-blue-600 to-cyan-500 text-transparent bg-clip-text">Expertise</span> </h2> 
+            <p className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed mb-10 text-justify font-medium"> {about || "Ingénieur passionné par l'exploitation des données et le déploiement d'intelligences artificielles sur-mesure au sein de Muamokel Agency. Mon objectif consiste à transformer des flux de données complexes en solutions prédictives et décisionnelles concrètes afin de propulser la croissance et l'innovation technologique de nos partenaires."} </p> 
+          </motion.div> 
+          
+          {/* Grid des spécialités techniques */} 
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4"> 
+            {details.map((item, index) => ( 
+              <motion.div key={index} variants={itemVariants} className="p-6 bg-white dark:bg-slate-900/20 border border-slate-200 dark:border-slate-800 rounded-2xl hover:border-blue-500/50 dark:hover:border-blue-500/30 hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-all duration-300 group shadow-sm" > 
+                <div className="text-blue-600 dark:text-blue-400 text-3xl mb-4 group-hover:scale-110 transition-transform"> {item.icon} </div> 
+                <h4 className="text-slate-900 dark:text-white font-bold text-lg mb-2 uppercase tracking-tight"> {item.title} </h4> 
+                <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed"> {item.text} </p> 
+              </motion.div> 
+            ))} 
+          </div> 
+          
+          {/* Devise / Citation de fin */} 
+          <motion.div variants={itemVariants} className="mt-12 p-8 bg-white dark:bg-slate-900 border-l-4 border-blue-600 rounded-r-2xl shadow-sm border border-slate-200 border-l-blue-600 dark:border-slate-800 dark:border-l-blue-600" > 
+            <h5 className="text-blue-600 dark:text-blue-400 font-black uppercase text-xs mb-2 tracking-widest"> Devise Opérationnelle </h5> 
+            <p className="text-slate-700 dark:text-slate-200 italic text-xl font-serif"> "Les données ne sont que du bruit sans un algorithme rigoureux pour en révéler la valeur et une infrastructure solide pour les porter." </p> 
+          </motion.div> 
+        </div> 
+
+      </div> 
+    </motion.section> 
+    
+    {/* Section Maps inférieure */} 
+    <div className="border-t border-slate-200 dark:border-slate-900 shadow-[0_-15px_40px_rgba(0,0,0,0.03)] dark:shadow-[0_-20px_50px_rgba(0,0,0,0.5)]"> 
+      <GoogleMapsSection /> 
+    </div> 
+  </div> 
+);
 }

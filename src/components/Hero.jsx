@@ -1,239 +1,116 @@
+import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import { FaCodeBranch, FaBrain, FaDatabase, FaNetworkWired } from 'react-icons/fa'; // Icônes orientées IA/Data
 import useParallax from '../hooks/useParallax';
 import useIntersectionObserver from '../hooks/useIntersectionObserver';
+import { profileImage } from '../assets/assets.js';
 
-import LazyImage from './LazyImage';
-import { useEffect, useState } from 'react';
-import notificationService from '../services/notificationService';
-import { profile1Image } from '../assets/assets.js';
-// eslint-disable-next-line no-unused-vars
-import { motion, AnimatePresence } from 'framer-motion';
-import AnimatedSection from './AnimatedSection';
-import { useNavigate } from 'react-router-dom';
 export default function Hero() {
   const scrollY = useParallax();
   const [elementRef] = useIntersectionObserver();
   const navigate = useNavigate();
 
-  // Tableau des backgrounds
-  const backgrounds = [
-    '/background7.png',
-    '/background8.png',
-    '/background9.jpeg',
-  ];
+  const backgrounds = ['/background11.png', '/background12.png', '/background13.jpeg'];
   const [bgIndex, setBgIndex] = useState(0);
 
-  // Slider automatique
   useEffect(() => {
     const timer = setInterval(() => {
       setBgIndex((prev) => (prev + 1) % backgrounds.length);
-    }, 4000); // Change toutes les 4 secondes
+    }, 4000);
     return () => clearInterval(timer);
   }, [backgrounds.length]);
 
-  // Notification de bienvenue après un délai
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      notificationService.welcome();
-    }, 2000);
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
-    <section
-      ref={elementRef}
-      id="home"
-      className="relative min-h-screen flex flex-col justify-center items-center text-center px-4 pt-20 overflow-hidden"
-    >
-      {/* Background image slider */}
-      <div
-        className="absolute inset-0 w-full h-full transition-all duration-1000"
-        style={{
-          backgroundImage: `url(${backgrounds[bgIndex]})`,
-          backgroundSize: 'cover',
+    <section ref={elementRef} className="relative min-h-screen flex items-center justify-center overflow-hidden bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
+      
+      {/* Arrière-plan avec Parallaxe et effet de matrice de données (Bleu) */}
+      <div 
+        className="absolute inset-0 z-0 transition-all duration-1000 opacity-20 dark:opacity-10" 
+        style={{ 
+          backgroundImage: `url(${backgrounds[bgIndex]})`, 
+          backgroundSize: 'cover', 
           backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          filter: 'brightness(0.3)',
-          transform: `translateY(${scrollY * 0.5}px)`,
-        }}
+          filter: 'blue-scale(1) brightness(0.8)',
+          transform: `translateY(${scrollY * 0.2}px)`,
+        }} 
       />
 
-      {/* Gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-dark-100/90 to-dark-100/70 z-10" />
+      {/* Cercles de lumière bleutés en arrière-plan (Effet R&D Lab) */}
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 dark:bg-blue-600/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/10 dark:bg-cyan-600/5 rounded-full blur-3xl pointer-events-none" />
 
-      {/* Particules flottantes animées */}
-      <div className="absolute inset-0 z-15 pointer-events-none">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full"
-            animate={{
-              x: [0, Math.random() * 100 - 50],
-              y: [0, Math.random() * 100 - 50],
-              opacity: [0, 1, 0],
-              scale: [0, 1, 0],
-            }}
-            transition={{
-              duration: Math.random() * 3 + 2,
-              repeat: Infinity,
-              delay: Math.random() * 2,
-            }}
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
+      <div className="relative z-20 max-w-5xl mx-auto px-4 text-center py-24">
+        
+        {/* Photo de profil avec anneau d'apprentissage de modèle (Model Training Loop) */}
+        <div className="relative inline-block mb-10">
+          {/* Anneaux mathématiques en rotation lente */}
+          <motion.div 
+            animate={{ rotate: 360 }} 
+            transition={{ duration: 25, repeat: Infinity, ease: "linear" }} 
+            className="absolute -inset-5 border border-dashed border-blue-500/40 rounded-full" 
           />
-        ))}
-      </div>
-
-      <div className="relative z-20">
-        {/* Profile Image avec animation sophistiquée */}
-        <AnimatedSection variant="scaleIn" delay={0.2}>
-          <div className="mb-8 flex justify-center">
-            <motion.div
-              whileHover={{
-                scale: 1.1,
-                rotate: 5,
-                transition: { type: 'spring', stiffness: 300 },
-              }}
-              className="relative"
-            >
-              <LazyImage
-                src={profile1Image}
-                alt="Louiscar Ingeba"
-                className="w-48 h-48 md:w-62 md:h-62 rounded-full object-cover border-4 border-purple shadow-neon-purple relative z-10"
-                 style={{ objectPosition: 'center 10%' }}
-                priority={true}
-                placeholder={
-                  <div className="w-48 h-48 md:w-64 md:h-64 rounded-full bg-gradient-to-r from-purple to-pink animate-pulse border-4 border-purple" />
-                }
-              />
-              {/* Cercle animé autour de la photo */}
-              <motion.div
-                className="absolute inset-0 rounded-full border-2 border-gradient-to-r from-blue-400 to-purple-500"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-              />
-              <motion.div
-                className="absolute inset-[-8px] rounded-full border border-purple-400/30"
-                animate={{ rotate: -360 }}
-                transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
-              />
-            </motion.div>
+          <motion.div 
+            animate={{ rotate: -360 }} 
+            transition={{ duration: 15, repeat: Infinity, ease: "linear" }} 
+            className="absolute -inset-3 border border-blue-400/20 rounded-full" 
+          />
+          
+          <div className="relative z-10 w-44 h-44 md:w-52 md:h-52 rounded-full overflow-hidden border-4 border-white dark:border-slate-900 shadow-[0_10px_40px_rgba(37,99,235,0.15)] dark:shadow-[0_0_40px_rgba(37,99,235,0.3)]">
+            <img 
+              src={profileImage} 
+              alt="Christian AZIPENZA" 
+              className="w-full h-full object-cover" 
+              style={{ objectPosition: 'center 10%' }}
+            />
           </div>
-        </AnimatedSection>
+        </div>
 
-        {/* Titre d'accueil avec animations staggered */}
-        <AnimatedSection variant="slideUp" delay={0.4}>
-          <div className="mb-8 text-center">
-            <motion.h2
-              className="text-2xl md:text-4xl font-bold mb-3 bg-gradient-to-r from-red-500 to-red-300 to-red-200 text-transparent bg-clip-text"
-              animate={{
-                backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: 'linear',
-              }}
-              style={{ backgroundSize: '200% 200%' }}
-            >
-              Louiscar Ingeba
-            </motion.h2>
+        {/* Titres et Descriptions */}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }} 
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <h1 className="text-4xl md:text-6xl font-black text-slate-900 dark:text-white mb-3 tracking-tight">
+            Christian <span className="bg-gradient-to-r from-blue-600 to-cyan-500 text-transparent bg-clip-text">AZIPENZA</span>
+          </h1>
 
-            <motion.p
-              className="text-lg md:text-2xl text-red-700 to-red-500 to-red-300 mb-5 font-medium bg-gradient-to-r from-red-400 to-purple-500 text-transparent bg-clip-text"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6, duration: 0.8 }}
-            >
-              Chargé Relations Publiques & Maintenance Système d'une agence de Développement informatiques                       <span>"MUAMOKEL AGENCY"</span> & Entrpreneur.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.8, duration: 0.8, type: 'spring' }}
-            >
-              <motion.p
-                className="text-xl md:text-2xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-purple-500 mb-4"
-                whileHover={{ scale: 1.05 }}
-                transition={{ type: 'spring', stiffness: 300 }}
-              >
-                Spécialisé en gestion de projets et support technique.
-
-              </motion.p>
-            </motion.div>
+          {/* Tag de spécialité technique */}
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 font-mono text-xs md:text-sm font-semibold mb-8 tracking-wider uppercase border border-blue-100 dark:border-blue-900/30">
+            <FaBrain className="animate-pulse" /> 
+            <span>Ingénieur Intelligence Artificielle & Data Science</span>
           </div>
-        </AnimatedSection>
 
-        {/* Boutons avec animations micro-interactions */}
-        <AnimatedSection variant="slideUp" delay={1.0}>
-          <motion.div
-            className="flex gap-4 justify-center"
-            variants={{
-              hidden: {},
-              visible: {
-                transition: {
-                  staggerChildren: 0.2,
-                },
-              },
-            }}
-            initial="hidden"
-            animate="visible"
+          <p className="max-w-2xl mx-auto text-slate-600 dark:text-slate-400 mb-10 text-base md:text-xl leading-relaxed">
+            Spécialiste de la valorisation de données complexes chez <span className="text-blue-600 dark:text-blue-400 font-bold">MUAMOKEL AGENCY</span>. 
+            Je conçois des architectures de <span className="text-slate-900 dark:text-white font-medium">Deep Learning</span> et orchestre des pipelines de production intelligents.
+          </p>
+        </motion.div>
+
+        {/* Boutons d'Action épurés */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <button 
+            onClick={() => navigate('/contact')} 
+            className="w-full sm:w-auto px-8 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl shadow-lg shadow-blue-500/20 hover:shadow-blue-500/30 transition-all hover:-translate-y-0.5"
           >
-            <motion.button
-              type="button"
-              onClick={() => navigate('/contact')}
-              className="group relative px-8 py-3 bg-gradient-to-r from-red-700 to-red-500 to-red-300 to-pink text-white rounded-lg overflow-hidden"
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0 },
-              }}
-              whileHover={{
-                scale: 1.05,
-                boxShadow: '0 20px 40px rgba(251, 251, 252, 0.2)',
-              }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <span className="relative z-10 font-semibold">Me contacter</span>
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-pink-500 to-red-500"
-                initial={{ x: '-100%' }}
-                whileHover={{ x: 0 }}
-                transition={{ duration: 0.3 }}
-              />
-            </motion.button>
+            Me contacter
+          </button>
+          <button 
+            onClick={() => navigate('/projects')} 
+            className="w-full sm:w-auto px-8 py-3.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 font-semibold rounded-xl hover:bg-slate-50 dark:hover:bg-slate-850 transition-all"
+          >
+            Découvrir mes projets
+          </button>
+        </div>
 
-            <motion.button
-              type="button"
-              onClick={() => navigate('/projects')}
-              className="group relative px-8 py-3 bg-dark-300 text-white rounded-lg border border-purple overflow-hidden"
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0 },
-              }}
-              whileHover={{
-                scale: 1.05,
-                boxShadow: '0 20px 40px rgba(255, 17, 17, 0.93)',
-              }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <span className="relative z-10 font-semibold">Projets</span>
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600"
-                initial={{ scale: 0 }}
-                whileHover={{ scale: 1 }}
-                transition={{ duration: 0.3 }}
-                style={{ originX: 0.5, originY: 0.5 }}
-              />
-            </motion.button>
-          </motion.div>
-        </AnimatedSection>
-      </div>
+        {/* Mini-Badges Technologiques discrets au bas de l'écran */}
+        <div className="mt-16 flex gap-6 justify-center text-slate-400 dark:text-slate-600 text-sm font-mono">
+          <span className="flex items-center gap-1"><FaDatabase /> MLOps</span>
+          <span className="flex items-center gap-1"><FaCodeBranch /> Git Flow</span>
+          <span className="flex items-center gap-1"><FaNetworkWired /> Neural Nets</span>
+        </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
-        <div className="animate-bounce w-6 h-6 border-2 border-purple rounded-full"></div>
       </div>
     </section>
   );

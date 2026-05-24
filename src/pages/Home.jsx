@@ -1,17 +1,15 @@
-import React from 'react';
-import NavbarSecured from '../components/NavbarSecured';
-import Hero from '../components/Hero';
-import Footer from '../components/Footer';
-import FAQSection from '../components/FAQSection';
+// Assurez-vous que vos imports sont corrects en haut du fichier
+import NavbarSecured from '../components/NavbarSecured'; // Ajustez le chemin selon votre projet
+import Hero from '../components/Hero';                 // Ajustez le chemin selon votre projet
+import FAQSection from '../components/FAQSection';     // Ajustez le chemin selon votre projet
+import Footer from '../components/Footer';             // Ajustez le chemin selon votre projet
 
 export default function Home() {
   return (
     <>
       <NavbarSecured />
-      <div className="mt-5">
-        <Hero />
-        <FAQSection />
-      </div>
+      <Hero />
+      <FAQSection />
       <Footer />
     </>
   );
