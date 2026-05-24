@@ -127,7 +127,7 @@ export default function About() {
             <div className="mt-12">
               <h3 className="text-2xl font-black text-slate-900 dark:text-white mb-6 uppercase tracking-tight flex items-center gap-3">
                 <span className="w-8 h-1 bg-blue-600 rounded-full"></span>
-                Détail des Certifications
+                Détail des Certifications 
               </h3>
               <div className="space-y-3">
                 {certifications.map((cert, index) => (
