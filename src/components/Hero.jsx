@@ -97,10 +97,10 @@ export default function Hero() {
             Me contacter
           </button>
           <button 
-            onClick={() => navigate('/projects')} 
+            onClick={() => navigate('/services')} 
             className="w-full sm:w-auto px-8 py-3.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 font-semibold rounded-xl hover:bg-slate-50 dark:hover:bg-slate-850 transition-all"
           >
-            Découvrir mes projets
+            Découvrir mes expertises
           </button>
         </div>
 
