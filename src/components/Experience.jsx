@@ -95,6 +95,10 @@ export default function Experience() {
                   <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-100 dark:border-slate-800 pt-4 mt-4 text-justify">
                     {exp.description}
                   </p>
+
+                   <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-100 dark:border-slate-800 pt-4 mt-4 text-justify">
+                    {exp.description1}
+                  </p>
                   
                 </div>
               </motion.div>

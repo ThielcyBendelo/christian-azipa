@@ -34,45 +34,57 @@ export const skills = [
 
 export const experiences = [
   {
-    role: 'Agent de Cybersécurité & Infra',
-    company: 'Muamokel Agency',
-    year: '2023 - Présent',
-    type: 'security', // Utilisé pour l'icône de bouclier
+    role: 'Développeur AI/Data - Projet d\'assistant intelligent RAG pour LMS ',
+    company: 'Universitaire (Lang Chan - Django)',
+    year: '2024 - 2025',
+    type: 'Conception', // Utilisé pour l'icône de bouclier
     description:
-      'Responsable de la cellule de défense numérique : déploiement de protocoles SSL/TLS, gestion des architectures VPN sécurisées et mise en place de politiques de sauvegarde immuables pour garantir la continuité d\'activité (DRP).',
+      '- Conception d\'un assistant académique automatisé basé sur la génération augmentée par récupération (RAG)',
+   description1:
+      '- Indexations des documents PDF, vectorisation, génération des réponses contextuelles.',
   },
   {
-    role: 'Administrateur Systèmes & Cloud',
-    company: 'Muamokel Agency',
-    year: '2025 - Présent',
-    type: 'maintenance', // Utilisé pour l'icône de serveur
+    role: 'Stagiaire techniques réseau - KTS service',
+    company: '',
+    year: '2024 - 2025',
+    type: 'Réseau', // Utilisé pour l'icône de serveur
     description:
-      'Administration avancée d\'infrastructures Cloud (AWS, Azure, O365). Optimisation du parc informatique et supervision du Helpdesk technique pour garantir une haute disponibilité des services de développement.',
+      'Mise en place et configuration réseau (Packet tracer & équipements réels), gestion d\'adressage IP, Vlan, routage statique/dynamique, SSH/Telnet. Apprentissage de bases d\'architecture réseau professionnelle.',
   },
   {
-    role: 'Chargé de Communication de Crise',
-    company: 'Muamokel Agency',
-    year: '2025 - Présent',
-    type: 'contract', 
+    role: 'Ingénieur vision par ordinateur - Système de détection d\'armes (YOLOv8 + MobileNetV2)',
+    company: '',
+    year: '2024 - 2025',
+    type: 'Ingégnerie', 
     description:
-      'Expert en gestion de réputation post-incident : élaboration de stratégies de communication face aux risques cyber et pilotage du narratif technologique de l\'agence auprès des partenaires stratégiques.',
+      'Détection en temps réel et réductions de faux positifs via double pepiline AI.',
+    description1:
+      'Tests sur un environnement CCTV simulé.',
   },
   {
-    role: 'Coordonnateur Événementiel Tech',
-    company: 'Muamokel Agency',
-    year: '2025 - Présent',
-    type: 'full-time',
+    role: 'Concepteur Robotique -robot ramasseur des bouteilles (Arduino + Vision AI',
+    company: '',
+    year: '2023 - 2024',
+    type: 'Robotique',
     description:
-      'Organisation de conférences spécialisées en transformation digitale et gestion des relations presse pour le lancement de solutions logicielles innovantes.',
+      'Détection d\'objets + controles des servomoteurs pour saisi et tri.',
   },
   {
-    role: 'Stratège en Image de Marque',
-    company: 'Muamokel Agency',
-    year: '2026 - Présent',
-    type: 'full-time',
+    role: 'Développeur système  Expert - Configuration Automatique de Routeur Cisco (Projet académique)',
+    company: 'universitaire',
+    year: '2021 - 2022',
+    type: 'Système',
     description:
-      'Définition du positionnement de marque "High-Tech" de l\'agence. Valorisation de l\'expertise en développement et nouvelles technologies sur le marché africain et international.',
-  }
+      'Système d\'aide à la décision basé sur moteur de règles.',
+  },
+   {
+    role: 'Stagiaire réseau et Télécomunication - Genyd Télécom',
+    company: 'Genyd Télécom',
+    year: '2021 - 2022',
+    type: 'Système',
+    description:
+      'Travailleur en tant que stagiaire en administration réseau.',
+  },
 ];
 
 

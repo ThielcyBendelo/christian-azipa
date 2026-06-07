@@ -50,19 +50,19 @@ export default function About() {
 
   const certifications = [
     {
-      title: "Spécialisation Deep Learning & Réseaux de Neurones",
-      issuer: "DeepLearning.AI / Coursera",
-      date: "2025"
+      title: "Intelligence Artificielle - Spécialisation robotique/Data IA (Licence).",
+      issuer: "Université Protestante au Congo (UPC)",
+      date: "2024 - 2025"
     },
     {
-      title: "Certification Machine Learning Engineering",
-      issuer: "Google Cloud Academy",
-      date: "2024"
+      title: "Intelligence Artificielle (Graduat)",
+      issuer: "Université Protestante au Congo (UPC)",
+      date: "2021 - 2022"
     },
     {
-      title: "Génie Informatique - Option Intelligence Artificielle",
-      issuer: "Université de Kinshasa (UNIKIN)",
-      date: "2023"
+      title: "Mathématique - Physique (Diplomés d'états).",
+      issuer: "Collège Saint Joseph/Elikya",
+      date: "2018 - 2019"
     }
   ];
 
